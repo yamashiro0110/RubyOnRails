@@ -1,0 +1,14 @@
+<h1>All Posts</h1>
+<hr />
+
+<ul>
+  <%= @posts.each do |post| %>
+    <li>
+      <strong>Title:</strong>
+      <span><%= post.title %></span>
+
+      <strong>Text:</strong>
+      <span><%= post.text %></span>
+    </li>
+  <% end %>
+</ul>
