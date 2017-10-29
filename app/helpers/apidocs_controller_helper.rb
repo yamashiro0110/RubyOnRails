@@ -1,0 +1,2 @@
+module ApidocsControllerHelper
+end

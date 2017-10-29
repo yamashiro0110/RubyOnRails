@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  mount GrapeSwaggerRails::Engine => '/swagger'
+
+  get 'swagger_docs', to: 'swagger_docs#index'
+
   get 'posts/new'
 
   get 'welcome/hoge'

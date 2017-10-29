@@ -39,3 +39,6 @@ gem 'spring',        group: :development
 # gem 'debugger', group: [:development, :test]
 
 gem 'her', '~> 0.9.0'
+gem 'grape-swagger-rails'
+gem 'swagger-blocks'
+gem 'rack-cors', :require => 'rack/cors'
