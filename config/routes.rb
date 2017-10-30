@@ -1,13 +1,25 @@
 Rails.application.routes.draw do
   mount GrapeSwaggerRails::Engine => '/swagger'
-
   get 'swagger_docs', to: 'swagger_docs#index'
-
   get 'posts/new'
-
   get 'welcome/hoge'
-
   get 'welcome/index'
+
+  namespace :"v1" do
+    get 'login', to: 'login#show'
+  end
+
+  ['v1.0', 'v1.1'].each { |version|
+    scope version do
+      get 'login', to: 'v1/login#show'
+    end
+  }
+
+  ['v2.0'].each { |version|
+    scope version do
+      get 'login', to: 'v1/login#show'
+    end
+  }
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
