@@ -1,4 +1,4 @@
-class PostsController < ApplicationController
+class V1::PostsController < ApplicationController
   include Swagger::Blocks
 
   def new

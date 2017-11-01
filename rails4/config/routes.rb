@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   mount GrapeSwaggerRails::Engine => '/swagger'
+  
   get 'swagger_docs', to: 'swagger_docs#index'
   get 'posts/new'
   get 'welcome/hoge'
@@ -7,11 +8,13 @@ Rails.application.routes.draw do
 
   namespace :"v1" do
     get 'login', to: 'login#show'
+    get 'posts/new'
   end
 
   ['v1.0', 'v1.1'].each { |version|
     scope version do
       get 'login', to: 'v1/login#show'
+      get 'posts/new'
     end
   }
 
