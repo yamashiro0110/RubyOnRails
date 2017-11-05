@@ -31,6 +31,10 @@ class AccessToken
     save_access_token_by_user_id!
   end
 
+  def update_last_access!
+    save_access_token!
+  end
+
   def expired?
     createt_at = Time.parse(@created)
     expired_at = createt_at + 30.day
@@ -61,10 +65,7 @@ class AccessToken
     end
 
     tokens = ActiveSupport::JSON.decode tokens_by_user_id
-
-    if tokens.include? @token
-      return 'OK'
-    end
+    return 'OK' if tokens.include? @token
 
     tokens.push(@token)
     Redis.current.set(key, tokens.to_json)

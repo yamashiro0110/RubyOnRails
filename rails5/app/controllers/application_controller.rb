@@ -1,7 +1,10 @@
 class ApplicationController < ActionController::API
-  before_action :check_request_header, :authenticate
+  before_action :authenticate
 
   private
+  def authenticate
+    check_request_header || check_access_token
+  end
 
   def authentication_header
     request.headers['Authentication']
@@ -16,7 +19,7 @@ class ApplicationController < ActionController::API
     end
   end
 
-  def authenticate
+  def check_access_token
     token = authentication_header
     access_token = AccessToken.find(token)
 
@@ -26,6 +29,7 @@ class ApplicationController < ActionController::API
       return
     end
 
+    access_token.update_last_access!
     @user_id = access_token.user_id
   end
 
