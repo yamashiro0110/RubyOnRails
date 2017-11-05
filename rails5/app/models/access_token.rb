@@ -12,11 +12,9 @@ class AccessToken
   end
 
   def self.find(token)
-    saved_json = Redis.current.get(token)
-
-    if saved_json == nil
-      return nil
-    end
+    key = "rails:sample:token:#{token}"
+    saved_json = Redis.current.get(key)
+    return nil if saved_json == nil
 
     json = ActiveSupport::JSON.decode saved_json
     access_token = AccessToken.new
@@ -29,7 +27,15 @@ class AccessToken
   end
 
   def save!
-    save_on_redis!
+    save_access_token!
+    save_access_token_by_user_id!
+  end
+
+  def expired?
+    createt_at = Time.parse(@created)
+    expired_at = createt_at + 30.day
+    now = Time.new
+    now > expired_at
   end
 
   private
@@ -38,8 +44,30 @@ class AccessToken
     Redis.current.get(token)
   end
 
-  def save_on_redis!
-    Redis.current.set(@token, self.to_json)
+  def save_access_token!
+    @last_access = Time.new
+    key = "rails:sample:token:#{@token}"
+    Redis.current.set(key, self.to_json)
+  end
+
+  def save_access_token_by_user_id!
+    key = "rails:sample:user:#{@user_id}"
+    tokens_by_user_id = Redis.current.get(key)
+
+    if tokens_by_user_id == nil
+      value = [@user_id].to_json
+      Redis.current.set(key, value)
+      return 'OK'
+    end
+
+    tokens = ActiveSupport::JSON.decode tokens_by_user_id
+
+    if tokens.include? @token
+      return 'OK'
+    end
+
+    tokens.push(@token)
+    Redis.current.set(key, tokens.to_json)
   end
 
 end
