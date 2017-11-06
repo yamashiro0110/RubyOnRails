@@ -1,0 +1,5 @@
+{
+  "msg": "hello sample easymock",
+  "path": "v1/sample",
+  "method": "get"
+}

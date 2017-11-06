@@ -1,2 +1,3 @@
 
 *.rdb
+rails5/easymock/access_logs.db
