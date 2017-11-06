@@ -1,7 +1,9 @@
 class ApplicationController < ActionController::API
+
   before_action :authenticate
 
   private
+
   def authenticate
     check_request_header || check_access_token
   end
