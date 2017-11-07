@@ -6,7 +6,7 @@ module V1
 
     def post
       @sample_model = SampleModel.create(msg: params[:msg], path: params[:path], method: params[:method])
-      render 'post', formats: 'json', handlers: 'jbuilder'
+      render 'post', formats: 'json', handlers: 'jbuilder', status: @sample_model.status
     end
 
     def access_token
