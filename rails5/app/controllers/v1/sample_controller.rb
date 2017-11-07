@@ -4,8 +4,17 @@ module V1
       render 'index', formats: 'json', handlers: 'jbuilder'
     end
 
-    def redis
-      render 'redis', formats: 'json', handlers: 'jbuilder'
+    def post
+      @sample_model = SampleModel.create(msg: params[:msg], path: params[:path], method: params[:method])
+      render 'post', formats: 'json', handlers: 'jbuilder'
     end
+
+    def access_token
+      user_id = params[:user_id]
+      @access_token = AccessToken.create(user_id)
+      @access_token.save!
+      render 'access_token', formats: 'json', handlers: 'jbuilder'
+    end
+
   end
 end

@@ -1,3 +1,5 @@
 {
-  "result": "OK"
+  "msg": "OK",
+  "path": "v1/sample",
+  "method": "post"
 }
