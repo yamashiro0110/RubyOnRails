@@ -4,7 +4,8 @@ class AccessToken
 
   attr_accessor :token, :user_id, :last_access, :created
 
-  def self.create(token, user_id)
+  def self.create(user_id)
+    token = SecureRandom.urlsafe_base64(64)
     now = Time.new
     prototype = AccessToken.new
     prototype.assign_attributes(token: token, user_id: user_id, created: now, last_access: now)
@@ -14,9 +15,9 @@ class AccessToken
   def self.find(token)
     key = "rails:sample:token:#{token}"
     saved_json = Redis.current.get(key)
-    return nil if saved_json == nil
+    return nil if saved_json.nil?
 
-    json = ActiveSupport::JSON.decode saved_json
+    json = ActiveSupport::JSON.decode(saved_json)
     access_token = AccessToken.new
     access_token.assign_attributes(json)
     access_token
@@ -58,7 +59,7 @@ class AccessToken
     key = "rails:sample:user:#{@user_id}"
     tokens_by_user_id = Redis.current.get(key)
 
-    if tokens_by_user_id == nil
+    if tokens_by_user_id.nil?
       value = [@user_id].to_json
       Redis.current.set(key, value)
       return 'OK'
