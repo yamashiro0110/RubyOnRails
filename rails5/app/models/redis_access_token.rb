@@ -1,4 +1,4 @@
-class AccessToken
+class RedisAccessToken
   include ActiveModel::Serializers
   include ActiveModel::AttributeAssignment
 
