@@ -2,16 +2,16 @@ class V1::LoginController < ApplicationController
   skip_before_action :authenticate
 
   def login
-    @login = Login.create(user: param[:user], password: param[:password])
+    login = Login.create(login_id: params[:user], password: params[:password])
 
-    if @login.error?
+    if login.error?
       @msg = login.error
-      render 'error', formats: 'json', handlers: 'jbuilder', status: login.status
+      render 'v1/error', formats: 'json', handlers: 'jbuilder', status: login.status
       return
     end
 
     @access_token = create_access_token(login.user_id)
-    render 'login', formats: 'json', handlers: 'jbuilder'
+    render 'success', formats: 'json', handlers: 'jbuilder'
   end
 
   private

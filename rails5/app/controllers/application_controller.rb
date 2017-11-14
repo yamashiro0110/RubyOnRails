@@ -14,7 +14,7 @@ class ApplicationController < ActionController::API
   def check_request_header
     if authentication_header.blank?
       @msg = 'requrie authentication header...'
-      render 'error', formats: 'json', handlers: 'jbuilder', status: 401
+      render 'v1/error', formats: 'json', handlers: 'jbuilder', status: 401
       return
     end
   end
@@ -24,7 +24,7 @@ class ApplicationController < ActionController::API
 
     if access_token.nil? || access_token.expired?
       @msg = 'invalid authentication token...'
-      render 'error', formats: 'json', handlers: 'jbuilder', status: 401
+      render 'v1/error', formats: 'json', handlers: 'jbuilder', status: 401
       return
     end
 
