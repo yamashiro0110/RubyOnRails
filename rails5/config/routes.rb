@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       get  'sample/get',    to: 'v1/sample#index'
       post 'sample/post',   to: 'v1/sample#post'
       post 'access_token',  to: 'v1/sample#access_token'
+      post 'login',         to: 'v1/login#login'
     end
   }
 
