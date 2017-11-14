@@ -79,6 +79,7 @@ GEM
     minitest (5.10.3)
     multi_json (1.12.2)
     multipart-post (2.0.0)
+    mysql2 (0.4.9)
     nio4r (2.1.0)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
@@ -149,6 +150,7 @@ DEPENDENCIES
   her
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
+  mysql2
   puma (~> 3.7)
   rack-cors
   rails (~> 5.1.4)
