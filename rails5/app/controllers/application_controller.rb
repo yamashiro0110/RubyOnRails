@@ -1,8 +1,21 @@
 class ApplicationController < ActionController::API
   before_action :authenticate
 
+  rescue_from StandardError, with: :standard_error
+
   private
 
+  # ***********************
+  # error handler
+  def standard_error(error)
+    if error
+      @msg = error.message
+      render 'v1/error', formats: 'json', handlers: 'jbuilder', status: 500
+    end
+  end
+
+  # ***********************
+  # authentication
   def authenticate
     check_request_header || check_access_token
   end
